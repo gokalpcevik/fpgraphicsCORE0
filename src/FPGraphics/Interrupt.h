@@ -6,6 +6,6 @@
 
 namespace FPG
 {
-    int InitializeGICDriver(XScuGic* pGIC, u16 DeviceID);
+    int InitializeInterruptControllerDriver(XScuGic* pGIC, u16 DeviceID);
 
 }

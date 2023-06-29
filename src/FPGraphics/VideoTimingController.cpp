@@ -39,7 +39,7 @@ namespace FPG
         return XST_SUCCESS;
     }
 
-    int InitializeVideoTimingControllerCore(XVtc* vtc)
+    int SetVTCSourceGenerator(XVtc* vtc)
     {
 
         /* For now, we will just initialize the source to be the generator(not detector). The 
@@ -70,14 +70,18 @@ namespace FPG
 	    SrcSel.HTotalSrc = 1;
 
         XVtc_SetSource(vtc,&SrcSel);
-        XVtc_RegUpdateEnable(vtc);
         return XST_SUCCESS;
     }
 
-    void EnableVTCGenerator(XVtc *vtc)
+    int VTC_InitializeDriveer(XVtc *pVTC)
     {
-        XVtc_Enable(vtc);
+        int Status0 = FPG::CfgInitializeVideoTimingController(pVTC);
+        int Status1 = FPG::SetVTCSourceGenerator(pVTC);
+        return (Status0 == XST_SUCCESS && Status1 == XST_SUCCESS) ? XST_SUCCESS : XST_FAILURE;
+    }
+
+    void VTC_EnableGenerator(XVtc *vtc)
+    {
         XVtc_EnableGenerator(vtc);
-        XVtc_RegUpdateEnable(vtc);
     }
 }
